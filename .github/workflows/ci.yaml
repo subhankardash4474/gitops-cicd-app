@@ -34,20 +34,20 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ secrets.GHCR_PAT }}
 
     - name: Build Docker image
       run: |
-        docker build -t ghcr.io/${{ github.repository }}/fastapi-demo:${{ github.sha }} .
+        docker build -t ghcr.io/subhankardash4474/fastapi-demo:${{ github.sha }} .
 
     - name: Scan image with Trivy
       uses: aquasecurity/trivy-action@v0.20.0
       with:
-        image-ref: ghcr.io/${{ github.repository }}/fastapi-demo:${{ github.sha }}
+        image-ref: ghcr.io/subhankardash4474/fastapi-demo:${{ github.sha }}
         format: 'table'
         exit-code: '0'
         ignore-unfixed: true
 
     - name: Push image to GHCR
       run: |
-        docker push ghcr.io/${{ github.repository }}/fastapi-demo:${{ github.sha }}
+        docker push ghcr.io/subhankardash4474/fastapi-demo:${{ github.sha }}
