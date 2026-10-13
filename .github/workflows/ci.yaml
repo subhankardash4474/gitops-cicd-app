@@ -40,3 +40,8 @@ jobs:
       run: |
         docker build -t ghcr.io/${{ github.actor }}/fastapi-demo:${{ github.sha }} \
                      -t ghcr.io/${{ github.actor }}/fastapi-demo:latest .
+
+    - name: Push Docker image
+      run: |
+        docker push ghcr.io/${{ github.actor }}/fastapi-demo:${{ github.sha }}
+        docker push ghcr.io/${{ github.actor }}/fastapi-demo:latest 
