@@ -50,4 +50,3 @@ jobs:
     - name: Push image to GHCR
       run: |
         docker push ghcr.io/${{ github.repository }}/fastapi-demo:${{ github.sha }}
-
