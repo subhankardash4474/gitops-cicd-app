@@ -27,7 +27,7 @@ jobs:
 
     - name: Run tests
       run: |
-        pytest -v
+        PYTHONPATH=. pytest -v
 
     - name: Log in to GHCR
       uses: docker/login-action@v2
@@ -38,16 +38,18 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t ghcr.io/subhankardash4474/fastapi-demo:${{ github.sha }} .
+        docker build -t ghcr.io/${{ github.actor }}/fastapi-demo:${{ github.sha }} \
+                     -t ghcr.io/${{ github.actor }}/fastapi-demo:latest .
 
     - name: Scan image with Trivy
       uses: aquasecurity/trivy-action@v0.20.0
       with:
-        image-ref: ghcr.io/subhankardash4474/fastapi-demo:${{ github.sha }}
+        image-ref: ghcr.io/${{ github.actor }}/fastapi-demo:${{ github.sha }}
         format: 'table'
         exit-code: '0'
         ignore-unfixed: true
 
     - name: Push image to GHCR
       run: |
-        docker push ghcr.io/subhankardash4474/fastapi-demo:${{ github.sha }}
+        docker push ghcr.io/${{ github.actor }}/fastapi-demo:${{ github.sha }}
+        docker push ghcr.io/${{ github.actor }}/fastapi-demo:latest
